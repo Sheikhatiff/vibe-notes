@@ -1,5 +1,5 @@
 import React from "react";
-import CreateNote from "../features/notes/createNote";
+import CreateNote from "../features/notes/CreateNote";
 import NotesType from "../features/notes/NotesType";
 import { useLocation } from "react-router-dom";
 import AiNote from "../features/notes/CreateAiNote";
