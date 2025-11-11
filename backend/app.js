@@ -11,18 +11,29 @@ import userRouter from "./routes/users.route.js";
 import authRouter from "./routes/auth.route.js";
 import notesRouter from "./routes/notes.route.js";
 import lanRouter from "./routes/lan.routes.js";
+
 const app = express();
+
+// --------------------
+// CORS
+// --------------------
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://192.168.18.221:5173",
+  process.env.PROD_URL, // Add production frontend URL from env
+];
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://192.168.18.221:5173"],
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PATCH", "DELETE", "PUT", "OPTIONS"],
     credentials: true,
   })
 );
 
-app.enable("trust proxy");
-
+// --------------------
+// Security Headers
+// --------------------
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" },
@@ -33,12 +44,12 @@ app.use(
           "'self'",
           "https://api.opencagedata.com",
           "https://*.tile.openstreetmap.org",
+          process.env.PROD_URL, // add your deployed backend URL here
         ],
         "img-src": [
           "'self'",
           "data:",
           "blob:",
-          "http://localhost:3000",
           "https://*.tile.openstreetmap.org",
           "https://unpkg.com",
         ],
@@ -55,6 +66,9 @@ app.use(
   })
 );
 
+// --------------------
+// Rate Limiting
+// --------------------
 const limiter = rateLimit({
   max: 200,
   windowMs: 60 * 60 * 1000,
@@ -62,43 +76,36 @@ const limiter = rateLimit({
 });
 app.use("/api", limiter);
 
+// --------------------
+// Parsing & Static
+// --------------------
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 app.use("/userImg", express.static(path.join(__dirname, "public", "userImg")));
 
 app.use(cookieParser());
+app.enable("trust proxy");
 
-app.set("trust proxy", 1);
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
 
-// app.get("/", (_, res) => {
-//   res.send("Vibe Notes API is running...");
-// });
-
+// --------------------
+// API Routes
+// --------------------
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/notes", notesRouter);
 app.use("/api/v1/lan", lanRouter);
 
-//it was "*" before, after express v5 it is "/*splat"
-// app.all("/*splat", (req, res, next) => {
-//   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-// });
-
-/**
- 2 steps of global error handling
-1, create middleware 
-2, create error so that this func caught it
-*/
+// --------------------
+// Global Error Handler
+// --------------------
 app.use(globalErrorHandler);
 
 export default app;
