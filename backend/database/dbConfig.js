@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-dotenv.config({ path: "config.env" });
+dotenv.config();
 const DB_URI = process.env.DATABASE_URI.replace(
   "<DB_PASS>",
   process.env.DB_PASS

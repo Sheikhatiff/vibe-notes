@@ -3,8 +3,9 @@ import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 
-import AppError from "./utils/appError.js";
 import globalErrorHandler from "./controllers/errorController.js";
 import userRouter from "./routes/users.route.js";
 import authRouter from "./routes/auth.route.js";
@@ -28,7 +29,27 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        "img-src": ["'self'", "data:", "http://localhost:3000"],
+        "connect-src": [
+          "'self'",
+          "https://api.opencagedata.com",
+          "https://*.tile.openstreetmap.org",
+        ],
+        "img-src": [
+          "'self'",
+          "data:",
+          "blob:",
+          "http://localhost:3000",
+          "https://*.tile.openstreetmap.org",
+          "https://unpkg.com",
+        ],
+        "style-src": [
+          "'self'",
+          "'unsafe-inline'",
+          "https://unpkg.com",
+          "https://fonts.googleapis.com",
+        ],
+        "font-src": ["'self'", "https://fonts.gstatic.com"],
+        "script-src": ["'self'", "'unsafe-inline'", "https://unpkg.com"],
       },
     },
   })
@@ -45,6 +66,12 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use("/userImg", express.static(path.join(__dirname, "public", "userImg")));
+
 app.use(cookieParser());
 
 app.set("trust proxy", 1);
@@ -53,9 +80,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (_, res) => {
-  res.send("Vibe Notes API is running...");
-});
+// app.get("/", (_, res) => {
+//   res.send("Vibe Notes API is running...");
+// });
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
@@ -63,9 +90,9 @@ app.use("/api/v1/notes", notesRouter);
 app.use("/api/v1/lan", lanRouter);
 
 //it was "*" before, after express v5 it is "/*splat"
-app.all("/*splat", (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
-});
+// app.all("/*splat", (req, res, next) => {
+//   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+// });
 
 /**
  2 steps of global error handling
