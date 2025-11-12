@@ -24,7 +24,12 @@ import { action as onLogin } from "./pages/Login";
 import { action as onsignup } from "./pages/Signup";
 import { action as settingAction } from "./pages/SettingPage";
 import { createNoteAction } from "./features/notes/actions/action";
-import Loader from "./ui/Loader";
+
+const Loader = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+  </div>
+);
 
 const router = createBrowserRouter([
   {
