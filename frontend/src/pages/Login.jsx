@@ -4,7 +4,7 @@ import LinkButton from "../ui/LinkButton";
 import Divider from "../ui/Divider";
 import GoogleIcon from "../../assets/icons/GoogleIcon.jsx";
 import LANCardUi from "../features/LAN/LANCardUi.jsx";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.svg";
 import store from "../store.js";
 import { loginThunk } from "../features/auth/authThunks.js";
 import { showError, showSuccess } from "../utils/toast";

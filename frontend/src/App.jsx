@@ -1,19 +1,30 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { lazy, Suspense } from "react";
+
+// Import only critical components that are needed immediately
 import AppLayout from "./ui/AppLayout";
 import Error from "./ui/Error";
 import Home from "./ui/Home";
-import Login, { action as onLogin } from "./pages/Login";
-import Signup, { action as onsignup } from "./pages/Signup";
 import PageNotfound from "./ui/PageNotfound";
-import CreateNotePage from "./pages/CreateNotePage";
-import LANPage from "./pages/LANPage";
-import DashboardPage from "./pages/DashboardPage";
-import AllNotes from "./pages/AllNotes";
-import NotePage from "./pages/NotePage";
 import ProtectedRoute from "./ui/ProtectedRoute";
-import SettingPage, { action as settingAction } from "./pages/SettingPage";
-import NoteEditPage from "./pages/NoteEditPage";
+
+// Lazy load all other components
+const Login = lazy(() => import("./pages/Login"));
+const Signup = lazy(() => import("./pages/Signup"));
+const CreateNotePage = lazy(() => import("./pages/CreateNotePage"));
+const LANPage = lazy(() => import("./pages/LANPage"));
+const DashboardPage = lazy(() => import("./pages/DashboardPage"));
+const AllNotes = lazy(() => import("./pages/AllNotes"));
+const NotePage = lazy(() => import("./pages/NotePage"));
+const SettingPage = lazy(() => import("./pages/SettingPage"));
+const NoteEditPage = lazy(() => import("./pages/NoteEditPage"));
+
+// Import actions directly (they're not components)
+import { action as onLogin } from "./pages/Login";
+import { action as onsignup } from "./pages/Signup";
+import { action as settingAction } from "./pages/SettingPage";
 import { createNoteAction } from "./features/notes/actions/action";
+import Loader from "./ui/Loader";
 
 const router = createBrowserRouter([
   {
@@ -30,19 +41,29 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Login />
+          </Suspense>
+        ),
         action: onLogin,
       },
       {
         path: "/signup",
-        element: <Signup />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Signup />
+          </Suspense>
+        ),
         action: onsignup,
       },
       {
         path: "/notes/:type/new",
         element: (
           <ProtectedRoute>
-            <CreateNotePage />
+            <Suspense fallback={<Loader />}>
+              <CreateNotePage />
+            </Suspense>
           </ProtectedRoute>
         ),
         action: createNoteAction,
@@ -51,7 +72,9 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <ProtectedRoute>
-            <DashboardPage />
+            <Suspense fallback={<Loader />}>
+              <DashboardPage />
+            </Suspense>
           </ProtectedRoute>
         ),
       },
@@ -59,7 +82,9 @@ const router = createBrowserRouter([
         path: "/notes",
         element: (
           <ProtectedRoute>
-            <AllNotes />
+            <Suspense fallback={<Loader />}>
+              <AllNotes />
+            </Suspense>
           </ProtectedRoute>
         ),
       },
@@ -67,7 +92,9 @@ const router = createBrowserRouter([
         path: "/notes/:type/:id",
         element: (
           <ProtectedRoute>
-            <NotePage />
+            <Suspense fallback={<Loader />}>
+              <NotePage />
+            </Suspense>
           </ProtectedRoute>
         ),
       },
@@ -75,21 +102,29 @@ const router = createBrowserRouter([
         path: "/notes/:type/:id/edit",
         element: (
           <ProtectedRoute>
-            <NoteEditPage />
+            <Suspense fallback={<Loader />}>
+              <NoteEditPage />
+            </Suspense>
           </ProtectedRoute>
         ),
         // action: onEdit,
       },
       {
         path: "/lan",
-        element: <LANPage />,
+        element: (
+          <Suspense fallback={<Loader />}>
+            <LANPage />
+          </Suspense>
+        ),
         // action: LANaction,
       },
       {
         path: "/settings",
         element: (
           <ProtectedRoute>
-            <SettingPage />
+            <Suspense fallback={<Loader />}>
+              <SettingPage />
+            </Suspense>
           </ProtectedRoute>
         ),
         action: settingAction,
@@ -102,7 +137,11 @@ const router = createBrowserRouter([
   },
 ]);
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<Loader />}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }
 
 export default App;

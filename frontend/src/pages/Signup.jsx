@@ -5,7 +5,7 @@ import Divider from "../ui/Divider";
 import GoogleIcon from "../../assets/icons/GoogleIcon.jsx";
 import PasswordStrengthMeter from "../ui/PasswordStrengthMeter.jsx";
 import LANCardUi from "../features/LAN/LANCardUi.jsx";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.svg";
 import store from "../store.js";
 import { signupThunk } from "../features/auth/authThunks.js";
 function Signup() {

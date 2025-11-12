@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowLeft, LogOut, Menu, UserLock, X } from "lucide-react";
 import LinkButton from "./LinkButton";
-import Logo from "../../assets/logo3.png";
+import Logo from "../../assets/logo3.svg";
 import { useSelector } from "react-redux";
 import { formatDate } from "../utils/formatDate";
 import { BACKEND_URL, hnadleLogout } from "../pages/DashboardPage";
@@ -28,8 +28,7 @@ function Header() {
           to="/"
           className="font-extrabold uppercase text-2xl tracking-widest text-stone-100 hover:text-stone-300"
         >
-          {/* Vibe Notes */}
-          <img src={Logo} className="h-13 sm:h-15 m-0 p-0" alt="Vibe Notes" />
+          <img src={Logo} className=" h-13 sm:h-15 m-0 p-0" alt="Vibe Notes" />
         </Link>
 
         {/* Desktop Navigation */}

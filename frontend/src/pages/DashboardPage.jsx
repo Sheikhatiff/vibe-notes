@@ -11,10 +11,9 @@ import { showError, showSuccess } from "../utils/toast";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const BACKEND_URL =
-  import.meta.env.VITE_BACKEND_URL ||
-  (import.meta.env.MODE === "production"
-    ? import.meta.env.PROD_URL
-    : "http://localhost:3000");
+  import.meta.env.MODE === "production"
+    ? import.meta.env.VITE_PROD_URL
+    : "http://localhost:3000";
 
 function DashboardPage() {
   const { user } = useAuth();
@@ -28,6 +27,7 @@ function DashboardPage() {
       <div className="hidden bg-emerald-200 border border-transparent text-stone-800 rounded-2xl md:col-span-3 col-span-4 sm:block">
         <div className=" m-4 p-4 items-center ">
           <div className="flex items-center mt-8 justify-center">
+            {console.log(import.meta.env.MODE, BACKEND_URL, "\n", user.photo)}
             <img
               src={`${BACKEND_URL}/userImg/${user.photo}`}
               alt="User Profile"

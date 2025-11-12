@@ -66,7 +66,7 @@ function AllNotes() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <>
+    <div className="relative">
       {" "}
       {loading && <Loader />}
       <div className=" min-h-screen bg-gray-50 p-8">
@@ -156,7 +156,7 @@ function AllNotes() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
