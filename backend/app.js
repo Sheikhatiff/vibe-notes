@@ -36,37 +36,41 @@ app.use(
 // --------------------
 // Security Headers
 // --------------------
-// app.use(
-//   helmet({
-//     crossOriginResourcePolicy: { policy: "cross-origin" },
-//     contentSecurityPolicy: {
-//       directives: {
-//         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-//         "connect-src": [
-//           "'self'",
-//           "https://api.opencagedata.com",
-//           "https://*.tile.openstreetmap.org",
-//           process.env.PROD_URL, // add your deployed backend URL here
-//         ],
-//         "img-src": [
-//           "'self'",
-//           "data:",
-//           "blob:",
-//           "https://*.tile.openstreetmap.org",
-//           "https://unpkg.com",
-//         ],
-//         "style-src": [
-//           "'self'",
-//           "'unsafe-inline'",
-//           "https://unpkg.com",
-//           "https://fonts.googleapis.com",
-//         ],
-//         "font-src": ["'self'", "https://fonts.gstatic.com"],
-//         "script-src": ["'self'", "'unsafe-inline'", "https://unpkg.com"],
-//       },
-//     },
-//   })
-// );
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "connect-src": [
+          "'self'",
+          "https://api.opencagedata.com",
+          "https://*.tile.openstreetmap.org",
+          "https://generativelanguage.googleapis.com", // Add this for Gemini API
+          process.env.PROD_URL,
+          process.env.VITE_PROD_URL,
+        ],
+        "img-src": [
+          "'self'",
+          "data:",
+          "blob:",
+          "https://*.tile.openstreetmap.org",
+          "https://unpkg.com",
+          process.env.VITE_PROD_URL,
+          process.env.PROD_URL, // Add this for your user images
+        ],
+        "style-src": [
+          "'self'",
+          "'unsafe-inline'",
+          "https://unpkg.com",
+          "https://fonts.googleapis.com",
+        ],
+        "font-src": ["'self'", "https://fonts.gstatic.com"],
+        "script-src": ["'self'", "'unsafe-inline'", "https://unpkg.com"],
+      },
+    },
+  })
+);
 
 // --------------------
 // Rate Limiting

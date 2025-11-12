@@ -7,6 +7,7 @@ import { formatDate } from "../utils/formatDate";
 import store from "../store.js";
 import { updateImageThunk, updateThunk } from "../features/auth/authThunks";
 import { showError, showSuccess } from "../utils/toast.jsx";
+import { BACKEND_URL } from "./DashboardPage.jsx";
 
 function SettingPage() {
   const user = useSelector((st) => st.auth.user);
@@ -67,13 +68,11 @@ function SettingPage() {
             <div className="flex flex-col items-center  gap-4">
               <div className="bg-emerald-100 border-4 border-emerald-300 rounded-full">
                 <img
-                  src={
-                    previewUrl || `http://localhost:3000/userImg/${user.photo}`
-                  }
+                  src={previewUrl || `${BACKEND_URL}/userImg/${user.photo}`}
                   alt="User Profile"
                   className="rounded-full h-40 w-40 object-cover"
                   onError={(e) => {
-                    e.target.src = "http://localhost:3000/userImg/default.jpg";
+                    e.target.src = `${BACKEND_URL}/userImg/default.jpg`;
                   }}
                 />
               </div>

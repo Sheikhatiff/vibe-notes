@@ -11,9 +11,7 @@ import { showError, showSuccess } from "../utils/toast";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const BACKEND_URL =
-  import.meta.env.MODE === "production"
-    ? import.meta.env.VITE_PROD_URL
-    : "http://localhost:3000";
+  import.meta.env.MODE === "production" ? "" : "http://localhost:3000";
 
 function DashboardPage() {
   const { user } = useAuth();
