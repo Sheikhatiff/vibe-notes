@@ -5,7 +5,7 @@ import LinkButton from "./LinkButton";
 import Logo from "../../assets/logo3.png";
 import { useSelector } from "react-redux";
 import { formatDate } from "../utils/formatDate";
-import { hnadleLogout } from "../pages/DashboardPage";
+import { BACKEND_URL, hnadleLogout } from "../pages/DashboardPage";
 
 function Header() {
   const user = useSelector((st) => st.auth.user);
@@ -115,7 +115,7 @@ function Header() {
                   <div>
                     <div className="flex items-start justify-center my-2">
                       <img
-                        src={`http://localhost:3000/userImg/${user?.photo}`}
+                        src={`${BACKEND_URL}/userImg/${user?.photo}`}
                         alt="User Profile"
                         className="rounded-full h-35"
                       />

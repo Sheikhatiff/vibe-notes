@@ -7,6 +7,7 @@ import {
   FileIcon,
 } from "lucide-react";
 import JSZip from "jszip";
+import { BACKEND_URL } from "../../pages/DashboardPage";
 
 function FileInput({ files, setFiles, inputCss = "", boxCss = "" }) {
   const handleFileChange = useCallback(
@@ -37,7 +38,6 @@ function FileInput({ files, setFiles, inputCss = "", boxCss = "" }) {
         let fileUrl = file.path || file.url;
 
         if (!fileUrl.startsWith("http://") && !fileUrl.startsWith("https://")) {
-          const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
           fileUrl = `${BACKEND_URL}/${fileUrl.replace(/^\//, "")}`;
         }
 
@@ -87,7 +87,6 @@ function FileInput({ files, setFiles, inputCss = "", boxCss = "" }) {
 
     try {
       const zip = new JSZip();
-      const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
       for (const file of files) {
         if (file instanceof File) {

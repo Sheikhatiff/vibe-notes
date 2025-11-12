@@ -9,6 +9,13 @@ import store from "../store";
 import { logoutThunk } from "../features/auth/authThunks";
 import { showError, showSuccess } from "../utils/toast";
 
+// eslint-disable-next-line react-refresh/only-export-components
+export const BACKEND_URL =
+  import.meta.env.VITE_BACKEND_URL ||
+  (import.meta.env.MODE === "production"
+    ? import.meta.env.PROD_URL
+    : "http://localhost:3000");
+
 function DashboardPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -22,7 +29,7 @@ function DashboardPage() {
         <div className=" m-4 p-4 items-center ">
           <div className="flex items-center mt-8 justify-center">
             <img
-              src={`${import.meta.env.VITE_BACKEND_URL}/userImg/${user.photo}`}
+              src={`${BACKEND_URL}/userImg/${user.photo}`}
               alt="User Profile"
               className="rounded-full h-35"
             />
