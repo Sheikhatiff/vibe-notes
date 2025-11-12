@@ -5,9 +5,11 @@ import LinkButton from "./LinkButton";
 import Logo from "../../assets/logo3.svg";
 import { useSelector } from "react-redux";
 import { formatDate } from "../utils/formatDate";
-import { BACKEND_URL, hnadleLogout } from "../pages/DashboardPage";
+import { hnadleLogout } from "../pages/DashboardPage";
 
 function Header() {
+  const BACKEND_URL =
+    import.meta.env.MODE === "production" ? "" : "http://localhost:3000";
   const user = useSelector((st) => st.auth.user);
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();

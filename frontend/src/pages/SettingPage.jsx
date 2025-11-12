@@ -7,9 +7,11 @@ import { formatDate } from "../utils/formatDate";
 import store from "../store.js";
 import { updateImageThunk, updateThunk } from "../features/auth/authThunks";
 import { showError, showSuccess } from "../utils/toast.jsx";
-import { BACKEND_URL } from "./DashboardPage.jsx";
 
 function SettingPage() {
+  const BACKEND_URL =
+    import.meta.env.MODE === "production" ? "" : "http://localhost:3000";
+
   const user = useSelector((st) => st.auth.user);
   const [name, setName] = useState(user.name);
   const [password, setPassword] = useState("");
