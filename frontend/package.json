@@ -13,6 +13,11 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/cli": "^7.4.4",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/geolocation": "^7.1.5",
+    "@capacitor/ios": "^7.4.4",
     "@google/genai": "^1.26.0",
     "@reduxjs/toolkit": "^2.9.2",
     "@tailwindcss/vite": "^4.1.15",
