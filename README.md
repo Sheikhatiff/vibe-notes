@@ -3,7 +3,6 @@
 > A modern, feature-rich note-taking application built with the MERN stack, offering intelligent note management, geolocation tagging, and secure local area network file sharing.
 
 [![MERN Stack](https://img.shields.io/badge/Stack-MERN-green.svg)](https://www.mongodb.com/mern-stack)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen)](https://nodejs.org)
 
 ## 🚀 Project Overview
