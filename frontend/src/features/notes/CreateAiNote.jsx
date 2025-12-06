@@ -35,11 +35,18 @@ function AiNote({ type }) {
     showInfo("Please wait while we process your request.");
     try {
       const res = await genAiNote(prompt);
-      setDescription(res || "Something went wrong on our end.");
+
+      // Check if response is an error object
+      if (res?.error) {
+        showError(res.message);
+        setDescription("");
+      } else {
+        setDescription(res || "Something went wrong on our end.");
+      }
     } catch (err) {
       console.error(err);
       setDescription("");
-      showError(err || "");
+      showError(err?.message || "Failed to generate note. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -58,11 +65,13 @@ function AiNote({ type }) {
 
   return (
     <>
-      <div className=" uppercase tracking-wide  ">
-        <h1 className="font-bold text-2xl">{type || "simple"} Note</h1>
-        <h5 className="text-stone-500 mt-4">
-          write a new {type || "simple"} note
-        </h5>
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-emerald-900 mb-2">
+          {type || "simple"} Note Details
+        </h2>
+        <p className="text-stone-600 text-sm">
+          Let AI help you create the perfect note
+        </p>
       </div>
       <Form method="POST">
         <div className="my-4 ">
@@ -109,7 +118,7 @@ function AiNote({ type }) {
           />
         </div>
         <div className="relative">
-          {isLoading && <Loader />}
+          {isLoading && <Loader fullScreen={false} size="sm" />}
           <TextAreaField
             name="description"
             value={description || ""}

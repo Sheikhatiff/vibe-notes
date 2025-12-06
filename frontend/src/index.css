@@ -66,3 +66,35 @@
 .leaflet-container {
   border-radius: 1rem;
 }
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #059669;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #047857;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-color: #059669 #f1f5f0;
+  scrollbar-width: thin;
+}
+
+/* Scrollbar for specific overflow containers */
+.overflow-auto,
+.overflow-y-auto,
+.overflow-x-auto {
+  scrollbar-color: #059669 transparent;
+}

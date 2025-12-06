@@ -39,18 +39,25 @@ function MapNotePage({ type }) {
   }, []);
 
   return (
-    <div className="grid grid-rows-[40vh_1fr] min-h-screen">
-      <div className="bg-emerald-200 relative">
-        {isLoading && <Loader />}
+    <div className="grid grid-rows-[45vh_1fr] md:grid-rows-1 md:grid-cols-2 gap-4 min-h-[calc(100vh-8rem)] bg-white rounded-2xl overflow-hidden shadow-xl">
+      {/* Map Section */}
+      <div className="bg-linear-to-br from-emerald-100 to-stone-100 relative order-2 md:order-1 rounded-2xl overflow-hidden">
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white/50 z-10">
+            <Loader fullScreen={false} size="md" />
+          </div>
+        )}
         {!isLoading && (
           <Map
             coordinates={pos}
             setNewPos={setNewPos}
             setLocation={setLocation}
           />
-        )}{" "}
+        )}
       </div>
-      <div className="overflow-auto">
+
+      {/* Form Section */}
+      <div className="overflow-auto order-1 md:order-2 bg-white">
         <MapNote
           type={type}
           newPos={newPos}

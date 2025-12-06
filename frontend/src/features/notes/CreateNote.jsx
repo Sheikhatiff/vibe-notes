@@ -35,11 +35,13 @@ function CreateNote({ type }) {
   }
   return (
     <>
-      <div className=" uppercase tracking-wide  ">
-        <h1 className="font-bold text-2xl">{type || "simple"} Note</h1>
-        <h5 className="text-stone-500 mt-4">
-          write a new {type || "simple"} note
-        </h5>
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-emerald-900 mb-2">
+          {type || "simple"} Note Details
+        </h2>
+        <p className="text-stone-600 text-sm">
+          Capture your thoughts quickly and efficiently
+        </p>
       </div>
       <Form method="POST">
         <div className="my-4 ">

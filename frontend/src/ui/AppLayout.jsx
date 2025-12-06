@@ -1,11 +1,13 @@
 import React from "react";
 import Header from "./Header";
 import { Outlet, useNavigation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Loader from "./Loader";
 
 function AppLayout() {
   const navigation = useNavigation();
-  const isLoading = navigation.state === "loading";
+  const authLoading = useSelector((state) => state.auth.loading);
+  const isLoading = navigation.state === "loading" || authLoading;
   return (
     <div className="grid">
       <Header />

@@ -32,7 +32,34 @@ Create a note purely based on the above prompt, following the rules strictly.
 
     return response.text;
   } catch (error) {
-    console.log(error);
-    // showError(error||"error in responsing")
+    console.error("Gemini API Error:", error);
+
+    // Determine error message based on error type
+    let errorMessage = "Unable to generate note with AI";
+
+    if (error?.message?.includes("API key")) {
+      errorMessage = "Gemini API is not configured";
+    } else if (error?.message?.includes("quota")) {
+      errorMessage = "Gemini API quota exceeded. Please try again later.";
+    } else if (error?.message?.includes("permission")) {
+      errorMessage = "Gemini API access denied. Check your API key.";
+    } else if (error?.status === 429) {
+      errorMessage = "Gemini API rate limit exceeded. Please try again later.";
+    } else if (error?.status === 401 || error?.status === 403) {
+      errorMessage =
+        "Gemini API authentication failed. Please check your API key.";
+    } else if (
+      error?.message?.includes("network") ||
+      error?.message?.includes("fetch")
+    ) {
+      errorMessage = "Network error. Please check your internet connection.";
+    }
+
+    // Return error object with message for caller to handle
+    return {
+      error: true,
+      message: errorMessage,
+      originalError: error,
+    };
   }
 }

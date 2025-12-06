@@ -12,6 +12,7 @@ function TextAreaField({
   disabled = false,
   css = "",
   divCss = "",
+  onKeyDown = null,
 }) {
   return (
     <div
@@ -33,6 +34,7 @@ function TextAreaField({
         name={name}
         value={value}
         onChange={(e) => setValue?.(e.target.value)}
+        onKeyDown={onKeyDown}
         placeholder={placeholder}
         rows={rows}
         autoFocus={autoFocus}
